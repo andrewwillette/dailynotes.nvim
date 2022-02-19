@@ -2,13 +2,18 @@ local M = {}
 local filetypec = nil
 M.init = function(filetype)
     filetypec = filetype
+    return nil
 end
-M.addDailyNoteShortcut = function(keymap,directory)
-    print(filetypec)
-    print(keymap)
-    print(directory)
-end
-M.example = function()
-    print("swagffff")
+M.addDailyNoteShortcut = function(keymap, directory)
+    vim.keymap.set(
+    "n",
+        keymap,
+        function()
+            --print(os.date("%x"))
+            vim.cmd("e "..directory .. "/" .. os.date("%Y-%m-%d") .. filetypec)
+
+        end,
+        {})
+    return nil
 end
 return M
