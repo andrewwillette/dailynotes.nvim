@@ -1,7 +1,7 @@
 local M = {}
-local filetypec = nil
+M._filetype = nil
 M.init = function(filetype)
-    filetypec = filetype
+    M._filetype = filetype
     return nil
 end
 M.addDailyNoteShortcut = function(keymap, directory)
@@ -9,9 +9,7 @@ M.addDailyNoteShortcut = function(keymap, directory)
     "n",
         keymap,
         function()
-            --print(os.date("%x"))
-            vim.cmd("e "..directory .. "/" .. os.date("%Y-%m-%d") .. filetypec)
-
+            vim.cmd("e "..directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype)
         end,
         {})
     return nil
