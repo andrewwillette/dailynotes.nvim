@@ -1,12 +1,13 @@
 local find_map = function(lhs)
-  local maps = vim.api.nvim_get_keymap('n')
+    local maps = vim.api.nvim_get_keymap('n')
 
-  for _, map in ipairs(maps) do
-    if map.lhs == lhs then
-      return map
+    for _, map in ipairs(maps) do
+        if map.lhs == lhs then
+            return map
+        end
     end
-  end
 end
+
 describe("dailynotes", function()
 
     it("can be required", function()
@@ -23,6 +24,6 @@ describe("dailynotes", function()
         dailynotes.addDailyNoteShortcut(configuredKeyMap, configuredDirectory)
         local found = find_map(configuredKeyMap)
         assert.equals(found.lhs, configuredKeyMap)
-        assert.truthy(found.lhs ~= nil )
+        assert.truthy(found.lhs ~= nil)
     end)
 end)
