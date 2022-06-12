@@ -1,1 +1,3 @@
-Show this doc when checking dailynotes help
+dailynotes.addDailyNoteShortcut({opts})                                    *dailynotes.addDailyNoteShortcut({})*
+
+Init daily notes with config
