@@ -1,3 +1,8 @@
-dailynotes.addDailyNoteShortcut({opts})                                    *dailynotes.addDailyNoteShortcut({})*
+dailynotes.init   *dailynotes.init(filetype)*
 
-Init daily notes with config
+Configure the filetype to be used for dailynotes.
+
+dailynotes.addDailyNoteShortcut   *dailynotes.addDailyNoteShortcut(keymap, directory)*
+
+Configure a keymap to trigger dailynotes in the directory.
+
