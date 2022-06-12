@@ -9,3 +9,5 @@ dailynotes.addDailyNoteShortcut                  *dailynotes.addDailyNoteShortcu
 
 Configure a keymap to trigger dailynotes in the directory.
 
+dailynotes.swag                                 *dailynotes.swag(filetype)*
+souldn't work
