@@ -39,11 +39,11 @@ M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
         {})
     else
       print("error opening dailyNotes new daily file: " .. err2)
-      return nil
+      return nil, err2
     end
   else
     print("error opening dailyNotes template file: " .. err)
-    return nil
+    return nil, err
   end
   return nil
 end
