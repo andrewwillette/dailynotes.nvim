@@ -36,18 +36,18 @@ M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
     return nil
   end
 
-  local dailyFile, err = io.open(dailyFileString, "wb")
-  if dailyFile == nil or err ~= nil then
-    print("error opening dailyNotes new daily file: " .. err)
-    return nil, err
+  local dailyFile, dlyFlErr = io.open(dailyFileString, "wb")
+  if dailyFile == nil or dlyFlErr ~= nil then
+    print("error opening dailyNotes new daily file: " .. dlyFlErr)
+    return nil, dlyFlErr
   end
 
   -- handle template file
   if templateFileURI ~= nil then
-    local templateFile, err = io.open(templateFileURI, "rb")
+    local templateFile, tmplErr = io.open(templateFileURI, "rb")
     if templateFile == nil then
-      print("error opening dailyNotes template file: " .. err)
-      return nil, err
+      print("error opening dailyNotes template file: " .. tmplErr)
+      return nil, tmplErr
     end
     local template_content = templateFile:read("*all")
     dailyFile:write(template_content)
