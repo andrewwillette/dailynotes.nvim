@@ -1,14 +1,18 @@
 # dailynotes.nvim
 
-A neovim plugin which allows the user to set keymaps to open daily notes. If the current day's notes don't exist, the file is written for the first time.
+A neovim plugin which allows the user to set keymaps to open "daily notes".
 
 Example configuration:
 
 ```lua
 local dailyNotes = require("dailynotes")
+dailyNotes.init(".md")
+-- absolute path required
+local homedir = os.getenv("HOME")
+dailyNotes.addDailyNoteShortcut("<leader>pn", homedir .. "/personal_notes")
 
-dailyNotes.init(".norg")
-dailyNotes.addDailyNoteShortcut("<leader>p", "/Users/andrewwillette/git/manual/general_notes/daily")
+-- optionally, you can provide the absolute filepath to a "template file" to populate new daily files
+dailyNotes.addDailyNoteShortcut("<leader>pn", homedir .. "/personal_notes", homedir .. "/personal_notes/dailytemplate.md")
 ```
 
 ## Installation
