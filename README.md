@@ -12,7 +12,7 @@ local homedir = os.getenv("HOME")
 dailyNotes.addDailyNoteShortcut("<leader>pn", homedir .. "/personal_notes")
 
 -- optionally, you can provide the absolute filepath to a "template file" to populate new daily files
-dailyNotes.addDailyNoteShortcut("<leader>pn", homedir .. "/personal_notes", homedir .. "/personal_notes/dailytemplate.md")
+dailyNotes.addDailyNoteShortcut("<leader>pt", homedir .. "/personal_notes_template", homedir .. "/personal_notes_template/dailytemplate.md")
 ```
 
 ## Installation
@@ -23,6 +23,3 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
     use 'andrewwillette/dailynotes.nvim'
 ...
 ```
-
-As of February 2022, requires the Neovim nightly build.
-
