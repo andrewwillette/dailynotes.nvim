@@ -24,12 +24,13 @@ M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
       "n",
       keymap,
       function()
-        vim.cmd("e " .. dailyFileString)
+        local dailyFileStringKM = directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
+        vim.cmd("e " .. dailyFileStringKM)
       end,
       {})
   end
 
-  -- if the filye already exists, then simply add the keymapping and return
+  -- if the file already exists, then simply add the keymapping and returnng and return
   local dailyFileExists = io.open(dailyFileString, "r")
   if dailyFileExists ~= nil then
     setKeymap()
