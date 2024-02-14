@@ -15,47 +15,71 @@ end
 -- templateFileURI: optional, the URI of the template file to use for the daily note
 M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
 
-  if M._filetype == nil then
-    M._filetype = ".txt"
-  end
 
   local dailyFileString = directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
   local setKeymap = function() vim.keymap.set(
       "n",
       keymap,
       function()
-        local dailyFileStringKM = directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
-        vim.cmd("e " .. dailyFileStringKM)
+        if M._filetype == nil then
+          M._filetype = ".txt"
+        end
+        local dailyFileExists = io.open(dailyFileString, "r")
+        if dailyFileExists ~= nil then
+          vim.cmd("e " .. dailyFileString)
+          return nil
+        end
+
+        local dailyFile, dlyFlErr = io.open(dailyFileString, "wb")
+        if dailyFile == nil or dlyFlErr ~= nil then
+          print("error opening dailyNotes new daily file: " .. dlyFlErr)
+          return nil, dlyFlErr
+        end
+
+        -- handle template file
+        if templateFileURI ~= nil then
+          local templateFile, tmplErr = io.open(templateFileURI, "rb")
+          if templateFile == nil then
+            print("error opening dailyNotes template file: " .. tmplErr)
+            return nil, tmplErr
+          end
+          local template_content = templateFile:read("*all")
+          dailyFile:write(template_content)
+        end
+
+        dailyFile:close()
+
+        vim.cmd("e " .. dailyFileString)
       end,
       {})
   end
 
-  -- if the file already exists, then simply add the keymapping and returnng and return
-  local dailyFileExists = io.open(dailyFileString, "r")
-  if dailyFileExists ~= nil then
-    setKeymap()
-    return nil
-  end
+  -- -- if the file already exists, then simply add the keymapping and returnng and return
+  -- local dailyFileExists = io.open(dailyFileString, "r")
+  -- if dailyFileExists ~= nil then
+  --   setKeymap()
+  --   return nil
+  -- end
 
-  local dailyFile, dlyFlErr = io.open(dailyFileString, "wb")
-  if dailyFile == nil or dlyFlErr ~= nil then
-    print("error opening dailyNotes new daily file: " .. dlyFlErr)
-    return nil, dlyFlErr
-  end
+  -- local dailyFile, dlyFlErr = io.open(dailyFileString, "wb")
+  -- if dailyFile == nil or dlyFlErr ~= nil then
+  --   print("error opening dailyNotes new daily file: " .. dlyFlErr)
+  --   return nil, dlyFlErr
+  -- end
 
-  -- handle template file
-  if templateFileURI ~= nil then
-    local templateFile, tmplErr = io.open(templateFileURI, "rb")
-    if templateFile == nil then
-      print("error opening dailyNotes template file: " .. tmplErr)
-      return nil, tmplErr
-    end
-    local template_content = templateFile:read("*all")
-    dailyFile:write(template_content)
-  end
+  -- -- handle template file
+  -- if templateFileURI ~= nil then
+  --   local templateFile, tmplErr = io.open(templateFileURI, "rb")
+  --   if templateFile == nil then
+  --     print("error opening dailyNotes template file: " .. tmplErr)
+  --     return nil, tmplErr
+  --   end
+  --   local template_content = templateFile:read("*all")
+  --   dailyFile:write(template_content)
+  -- end
 
-  dailyFile:close()
-  setKeymap()
+  -- dailyFile:close()
+  -- setKeymap()
   return nil
 end
 
