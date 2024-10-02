@@ -17,9 +17,9 @@ dailyNotes.addDailyNoteShortcut("<leader>pt", homedir .. "/personal_notes_templa
 
 ## Installation
 
-Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 ...
-    use 'andrewwillette/dailynotes.nvim'
+  "andrewwillette/dailynotes.nvim",
 ...
 ```
