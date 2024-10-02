@@ -15,7 +15,8 @@ M.addDailyNoteShortcut = function(dnc)
       if dnc.filetype == nil then
         dnc.filetype = ".txt"
       end
-      local dailyFileString = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
+      local dailyFileString = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. dnc.filetype
+
       local dailyFileExists = io.open(dailyFileString, "r")
       if dailyFileExists ~= nil then
         vim.cmd("e " .. dailyFileString)
