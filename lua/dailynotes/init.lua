@@ -1,27 +1,21 @@
 local M = {}
-M._filetype = nil
 
-M.init = function(filetype)
-  -- handle both '.txt' and 'txt' arguments
-  filetype = string.gsub(filetype, "%.", "")
-  filetype = "." .. filetype
+---@class DailyNoteConfig
+---@field keymap string
+---@field directory string
+---@field filetype? string
+---@field templateFile? string
 
-  M._filetype = filetype
-  return nil
-end
-
--- keymap: required, the keymap to use for the shortcut
--- directory: required, the directory to store the daily notes in
--- templateFileURI: optional, the URI of the template file to use for the daily note
-M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
+---@param dnc DailyNoteConfig
+M.addDailyNoteShortcut = function(dnc)
   vim.keymap.set(
     "n",
-    keymap,
+    dnc.keymap,
     function()
-      if M._filetype == nil then
-        M._filetype = ".txt"
+      if dnc.filetype == nil then
+        dnc.filetype = ".txt"
       end
-      local dailyFileString = directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
+      local dailyFileString = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. M._filetype
       local dailyFileExists = io.open(dailyFileString, "r")
       if dailyFileExists ~= nil then
         vim.cmd("e " .. dailyFileString)
@@ -35,10 +29,10 @@ M.addDailyNoteShortcut = function(keymap, directory, templateFileURI)
       end
 
       -- handle template file
-      if templateFileURI ~= nil then
-        local templateFile, tmplErr = io.open(templateFileURI, "rb")
+      if dnc.templateFile ~= nil then
+        local templateFile, tmplErr = io.open(dnc.templateFile, "rb")
         if templateFile == nil then
-          print("error opening dailyNotes template file: " .. tmplErr)
+          vim.print("error opening dailyNotes template file: " .. tmplErr)
           return nil, tmplErr
         end
         local template_content = templateFile:read("*all")

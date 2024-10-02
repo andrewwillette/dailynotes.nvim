@@ -9,7 +9,6 @@ local find_map = function(lhs)
 end
 
 describe("dailynotes", function()
-
   it("can be required", function()
     require("dailynotes")
   end)
@@ -19,10 +18,16 @@ describe("dailynotes", function()
     local configuredDirectory = "~/tmp/notes"
     local configuredFileType = ".txt"
     local dailynotes = require("dailynotes")
-    dailynotes.init(configuredFileType)
-    assert.are.same(dailynotes._filetype, configuredFileType)
-    dailynotes.addDailyNoteShortcut(configuredKeyMap, configuredDirectory, "/Users/rjm995/tmp/dailyCapitalOneNotesTemplate.md")
+    local hm = os.getenv("HOME")
+
+    dailynotes.addDailyNoteShortcut({
+      keymap = configuredKeyMap,
+      directory = configuredDirectory,
+      filetype = configuredFileType,
+      templateFile = home .. "/tmp/dailyCapitalOneNotesTemplate.md",
+    })
     local found = find_map(configuredKeyMap)
+
     assert.equals(found.lhs, configuredKeyMap)
     assert.truthy(found.lhs ~= nil)
   end)

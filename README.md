@@ -6,13 +6,23 @@ Example configuration:
 
 ```lua
 local dailyNotes = require("dailynotes")
-dailyNotes.init(".md")
+
 -- absolute path required
 local homedir = os.getenv("HOME")
-dailyNotes.addDailyNoteShortcut("<leader>pn", homedir .. "/personal_notes")
+
+dailyNotes.addDailyNoteShortcut({
+  keymap = "<leader>pn", 
+  directory = homedir .. "/personal_notes"
+  filetype = ".md",
+})
 
 -- optionally, you can provide the absolute filepath to a "template file" to populate new daily files
-dailyNotes.addDailyNoteShortcut("<leader>pt", homedir .. "/personal_notes_template", homedir .. "/personal_notes_template/dailytemplate.md")
+dailyNotes.addDailyNoteShortcut({
+  keymap = "<leader>pn", 
+  directory = homedir .. "/personal_notes"
+  filetype = ".md",
+  templateFile = homedir .. "/personal_notes_template/dailytemplate.md",
+})
 ```
 
 ## Installation
