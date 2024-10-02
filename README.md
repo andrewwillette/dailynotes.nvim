@@ -5,19 +5,19 @@ A neovim plugin which allows the user to set keymaps to open "daily notes".
 Example configuration:
 
 ```lua
-local dailyNotes = require("dailynotes")
+local dailynotes = require("dailynotes")
 
 -- absolute path required
 local homedir = os.getenv("HOME")
 
-dailyNotes.addDailyNoteShortcut({
+dailynotes.addDailyNoteShortcut({
   keymap = "<leader>pn", 
   directory = homedir .. "/personal_notes"
   filetype = ".md",
 })
 
 -- optionally, you can provide the absolute filepath to a "template file" to populate new daily files
-dailyNotes.addDailyNoteShortcut({
+dailynotes.addDailyNoteShortcut({
   keymap = "<leader>pn", 
   directory = homedir .. "/personal_notes"
   filetype = ".md",
