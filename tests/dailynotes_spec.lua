@@ -14,21 +14,21 @@ describe("dailynotes", function()
   end)
 
   it("sets the configured keymap correctly", function()
-    local configuredKeyMap = ",t"
-    local configuredDirectory = "~/tmp/notes"
-    local configuredFileType = ".txt"
+    local configuredkeymap = ",t"
+    local configureddir = "~/tmp/notes"
+    local configuredfiletype = ".txt"
     local dailynotes = require("dailynotes")
     local hm = os.getenv("HOME")
 
     dailynotes.addDailyNoteShortcut({
-      keymap = configuredKeyMap,
-      directory = configuredDirectory,
-      filetype = configuredFileType,
+      keymap = configuredkeymap,
+      directory = configureddir,
+      filetype = configuredfiletype,
       templateFile = hm .. "/tmp/dailyCapitalOneNotesTemplate.md",
     })
-    local found = find_map(configuredKeyMap)
+    local found = find_map(configuredkeymap)
 
-    assert.equals(found.lhs, configuredKeyMap)
+    assert.equals(found.lhs, configuredkeymap)
     assert.truthy(found.lhs ~= nil)
   end)
 end)

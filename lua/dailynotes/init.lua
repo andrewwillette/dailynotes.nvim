@@ -4,7 +4,7 @@ local M = {}
 ---@field keymap string
 ---@field directory string
 ---@field filetype? string
----@field templateFile? string
+---@field templatefile? string
 
 ---@param dnc DailyNoteConfig
 M.addDailyNoteShortcut = function(dnc)
@@ -15,34 +15,34 @@ M.addDailyNoteShortcut = function(dnc)
       if dnc.filetype == nil then
         dnc.filetype = ".txt"
       end
-      local dailyFileString = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. dnc.filetype
+      local dailyfileabsolute = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. dnc.filetype
 
-      local dailyFileExists = io.open(dailyFileString, "r")
-      if dailyFileExists ~= nil then
-        vim.cmd("e " .. dailyFileString)
+      local dailyfileexists = io.open(dailyfileabsolute, "r")
+      if dailyfileexists ~= nil then
+        vim.cmd("e " .. dailyfileabsolute)
         return nil
       end
 
-      local dailyFile, dlyFlErr = io.open(dailyFileString, "wb")
-      if dailyFile == nil or dlyFlErr ~= nil then
-        print("error opening dailyNotes new daily file: " .. dlyFlErr)
-        return nil, dlyFlErr
+      local dailyfile, dailyfileerr = io.open(dailyfileabsolute, "wb")
+      if dailyfile == nil or dailyfileerr ~= nil then
+        print("error opening dailyNotes new daily file: " .. dailyfileerr)
+        return nil, dailyfileerr
       end
 
       -- handle template file
-      if dnc.templateFile ~= nil then
-        local templateFile, tmplErr = io.open(dnc.templateFile, "rb")
+      if dnc.templatefile ~= nil then
+        local templateFile, tmplErr = io.open(dnc.templatefile, "rb")
         if templateFile == nil then
           vim.print("error opening dailyNotes template file: " .. tmplErr)
           return nil, tmplErr
         end
-        local template_content = templateFile:read("*all")
-        dailyFile:write(template_content)
+        local templatecontent = templateFile:read("*all")
+        dailyfile:write(templatecontent)
       end
 
-      dailyFile:close()
+      dailyfile:close()
 
-      vim.cmd("e " .. dailyFileString)
+      vim.cmd("e " .. dailyfileabsolute)
     end,
     {})
   return nil
