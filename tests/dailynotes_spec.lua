@@ -24,7 +24,7 @@ describe("dailynotes", function()
       keymap = configuredKeyMap,
       directory = configuredDirectory,
       filetype = configuredFileType,
-      templateFile = home .. "/tmp/dailyCapitalOneNotesTemplate.md",
+      templateFile = hm .. "/tmp/dailyCapitalOneNotesTemplate.md",
     })
     local found = find_map(configuredKeyMap)
 

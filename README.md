@@ -33,3 +33,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
   "andrewwillette/dailynotes.nvim",
 ...
 ```
+
+## Testing
+```
+nvim --headless -c ':PlenaryBustedDirectory tests'
+```
+
