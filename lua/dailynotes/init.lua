@@ -1,10 +1,10 @@
 local M = {}
 
 ---@class DailyNoteConfig
----@field keymap string
----@field directory string
----@field filetype? string
----@field templatefile? string
+---@field public keymap string
+---@field public directory string
+---@field public filetype? string
+---@field public templatefile? string
 
 ---@param dnc DailyNoteConfig
 M.addDailyNoteShortcut = function(dnc)
