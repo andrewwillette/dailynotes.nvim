@@ -1,9 +1,5 @@
 *dailynotes.nvim* Configure creation and editing of daily notes.
 
-dailynotes.init                                 *dailynotes.init(filetype)*
-
-Configure the filetype to be used for dailynotes.
-
 dailynotes.addDailyNoteShortcut                  *dailynotes.addDailyNoteShortcut(keymap, directory)*
 
 Configure a keymap to trigger dailynotes in the directory.

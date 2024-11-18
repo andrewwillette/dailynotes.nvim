@@ -3,8 +3,8 @@ local M = {}
 ---@class DailyNoteConfig
 ---@field public keymap string
 ---@field public directory string
----@field public filetype? string
----@field public templatefile? string
+---@field public filetype? string|nil
+---@field public templatefile? string|nil
 
 ---@param dnc DailyNoteConfig
 M.addDailyNoteShortcut = function(dnc)
