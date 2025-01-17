@@ -20,7 +20,7 @@ describe("dailynotes", function()
     local dailynotes = require("dailynotes")
     local hm = os.getenv("HOME")
 
-    dailynotes.addDailyNoteShortcut({
+    dailynotes.opendailynote({
       keymap = configuredkeymap,
       directory = configureddir,
       filetype = configuredfiletype,
