@@ -10,19 +10,25 @@ local dailynotes = require("dailynotes")
 -- absolute path required
 local homedir = os.getenv("HOME")
 
-dailynotes.addDailyNoteShortcut({
-  keymap = "<leader>pn", 
-  directory = homedir .. "/personal_notes"
-  filetype = ".md",
-})
+vim.keymap.set("n", "<leader>dn", function()
+    dailynotes.opendailynote({
+      keymap = "<leader>pn", 
+      directory = homedir .. "/personal_notes"
+      filetype = ".md",
+    })
+  end,
+{ noremap = true })
 
 -- optionally, you can provide the absolute filepath to a "template file" to populate new daily files
-dailynotes.addDailyNoteShortcut({
-  keymap = "<leader>pn", 
-  directory = homedir .. "/personal_notes"
-  filetype = ".md",
-  templateFile = homedir .. "/personal_notes_template/dailytemplate.md",
-})
+vim.keymap.set("n", "<leader>dn", function()
+    dailynotes.opendailynote({
+      keymap = "<leader>pn", 
+      directory = homedir .. "/personal_notes"
+      filetype = ".md",
+      templateFile = homedir .. "/personal_notes_template/dailytemplate.md",
+    })
+  end,
+{ noremap = true })
 ```
 
 ## Installation

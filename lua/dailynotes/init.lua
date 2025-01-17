@@ -1,50 +1,43 @@
 local M = {}
 
 ---@class DailyNoteConfig
----@field public keymap string
 ---@field public directory string
 ---@field public filetype? string|nil
 ---@field public templatefile? string|nil
 
 ---@param dnc DailyNoteConfig
-M.addDailyNoteShortcut = function(dnc)
-  vim.keymap.set(
-    "n",
-    dnc.keymap,
-    function()
-      if dnc.filetype == nil then
-        dnc.filetype = ".txt"
-      end
-      local dailyfileabsolute = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. dnc.filetype
+M.opendailynote = function(dnc)
+  if dnc.filetype == nil then
+    dnc.filetype = ".txt"
+  end
+  local dailyfileabsolute = dnc.directory .. "/" .. os.date("%Y-%m-%d") .. dnc.filetype
 
-      local dailyfileexists = io.open(dailyfileabsolute, "r")
-      if dailyfileexists ~= nil then
-        vim.cmd("e " .. dailyfileabsolute)
-        return nil
-      end
+  local dailyfileexists = io.open(dailyfileabsolute, "r")
+  if dailyfileexists ~= nil then
+    vim.cmd("e " .. dailyfileabsolute)
+    return nil
+  end
 
-      local dailyfile, dailyfileerr = io.open(dailyfileabsolute, "wb")
-      if dailyfile == nil or dailyfileerr ~= nil then
-        print("error opening dailyNotes new daily file: " .. dailyfileerr)
-        return nil, dailyfileerr
-      end
+  local dailyfile, dailyfileerr = io.open(dailyfileabsolute, "wb")
+  if dailyfile == nil or dailyfileerr ~= nil then
+    print("error opening dailyNotes new daily file: " .. dailyfileerr)
+    return nil, dailyfileerr
+  end
 
-      -- handle template file
-      if dnc.templatefile ~= nil then
-        local templateFile, tmplErr = io.open(dnc.templatefile, "rb")
-        if templateFile == nil then
-          vim.print("error opening dailyNotes template file: " .. tmplErr)
-          return nil, tmplErr
-        end
-        local templatecontent = templateFile:read("*all")
-        dailyfile:write(templatecontent)
-      end
+  -- handle template file
+  if dnc.templatefile ~= nil then
+    local templateFile, tmplErr = io.open(dnc.templatefile, "rb")
+    if templateFile == nil then
+      vim.print("error opening dailyNotes template file: " .. tmplErr)
+      return nil, tmplErr
+    end
+    local templatecontent = templateFile:read("*all")
+    dailyfile:write(templatecontent)
+  end
 
-      dailyfile:close()
+  dailyfile:close()
 
-      vim.cmd("e " .. dailyfileabsolute)
-    end,
-    {})
+  vim.cmd("e " .. dailyfileabsolute)
   return nil
 end
 
