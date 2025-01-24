@@ -1,6 +1,6 @@
-# dailynotes.nvim
+# notes.nvim
 
-A neovim plugin which allows the user to set keymaps to open "daily notes".
+A neovim plugin for recurring note-taking!
 
 Example configuration:
 
@@ -30,18 +30,3 @@ vim.keymap.set("n", "<leader>dn", function()
   end,
 { noremap = true })
 ```
-
-## Installation
-
-Using [lazy.nvim](https://github.com/folke/lazy.nvim):
-```lua
-...
-  "andrewwillette/dailynotes.nvim",
-...
-```
-
-## Testing
-```
-nvim --headless -c ':PlenaryBustedDirectory tests'
-```
-
