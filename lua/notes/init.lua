@@ -76,8 +76,8 @@ end
 ---@class WeeklyNoteConfig
 ---@field public meetingname string name of the weekly meeting, used in filename construction
 ---@field public directory string the location for the weekly meeting files to be stored
----@field public template string filepath to a "template" used for initializing new meeting notes
 ---@field public dayofweek string the day of the week the meeting is held, "Monday", "Tuesday", etc.
+---@field public template? string|nil filepath to a "template" used for initializing new meeting notes
 ---@field public filetype? string|nil
 
 ---open a weekly note
@@ -93,26 +93,28 @@ M.openweeklynote = function(wnc)
     return err
   end
   nextmeetingdate = nextmeetingdate:gsub("-", "_")
-  local filename = wnc.meetingname .. "_" .. nextmeetingdate .. wnc.filetype
-  local fileexists = io.open(wnc.directory .. "/" .. filename, "r")
+  local fullfilepath = wnc.directory .. "/" .. wnc.meetingname .. "_" .. nextmeetingdate .. wnc.filetype
+  local fileexists = io.open(fullfilepath, "r")
   if fileexists ~= nil then
-    vim.cmd("e " .. wnc.directory .. "/" .. filename)
+    vim.cmd("e " .. fullfilepath)
     return nil
   end
-  local file, fileerr = io.open(wnc.directory .. "/" .. filename, "wb")
+  local file, fileerr = io.open(fullfilepath, "wb")
   if file == nil or fileerr ~= nil then
     vim.notify("error opening weekly meeting notes new file: " .. fileerr)
     return fileerr
   end
-  local templateFile, tmplErr = io.open(wnc.template, "rb")
-  if templateFile == nil then
-    vim.vim.notify("error opening weekly meeting notes template file: " .. tmplErr)
-    return tmplErr
+  if wnc.template ~= nil then
+    local templateFile, tmplErr = io.open(wnc.template, "rb")
+    if templateFile == nil then
+      vim.notify("error opening weekly meeting notes template file: " .. tmplErr)
+      return tmplErr
+    end
+    local templatecontent = templateFile:read("*all")
+    file:write(templatecontent)
   end
-  local templatecontent = templateFile:read("*all")
-  file:write(templatecontent)
   file:close()
-  vim.cmd("e " .. wnc.directory .. "/" .. filename)
+  vim.cmd("e " .. fullfilepath)
 end
 
 return M
